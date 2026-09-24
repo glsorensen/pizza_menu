@@ -199,7 +199,8 @@
     box-shadow: 0 1px 0 var(--line);
   }
   .pie h3 { font-family: "Graduate", Georgia, serif; font-weight: 400; font-size: 1.45rem; line-height: 1.15; margin: 0; }
-  .classic { font-style: italic; color: var(--ink-soft); font-size: 0.95rem; margin: 2px 0 6px; }
+  .classic, .lore { font-style: italic; color: var(--ink-soft); font-size: 0.95rem; margin: 2px 0 6px; }
+  .classic + .lore { margin-top: -4px; }
   .pie p.what { margin: 0; }
   .tag {
     display: inline-block;
@@ -406,21 +407,25 @@
       <article class="pie">
         <h3>The Mile High</h3>
         <p class="classic">Margherita</p>
+        <p class="lore">Home field since 1960. Where every play starts.</p>
         <p class="what">Tomato sauce, fresh mozzarella, basil, olive oil, grated Parmesan.</p>
       </article>
       <article class="pie">
         <h3>Orange Crush</h3>
         <p class="classic">Pepperoni</p>
+        <p class="lore">The '77 defense that took Denver to its first Super Bowl.</p>
         <p class="what">Tomato sauce, mozzarella, cupped pepperoni, grated Parmesan.</p>
       </article>
       <article class="pie">
         <h3>The Blitz</h3>
         <p class="classic">Sausage</p>
+        <p class="lore">Send everybody. Sausage on every inch.</p>
         <p class="what">Tomato sauce, mozzarella, crumbled Italian sausage, grated Parmesan.</p>
       </article>
       <article class="pie veg">
-        <h3>The Audible</h3>
+        <h3>Omaha!</h3>
         <p class="classic">Tomato pie</p>
+        <p class="lore">Peyton's call at the line. Change the play, drop the cheese.</p>
         <p class="what">Tomato sauce, garlic, olive oil, oregano. No cheese.</p>
         <span class="tag">Vegan, dairy-free</span>
       </article>
@@ -455,19 +460,23 @@
     <div class="pies">
       <article class="pie">
         <h3>Red Zone</h3>
+        <p class="lore">Inside the 20. Things get hot.</p>
         <p class="what"><span class="formula">Orange Crush</span> + pickled jalapeños and pineapple, finished with hot honey.</p>
       </article>
       <article class="pie veg">
         <h3>Field Goal</h3>
-        <p class="what"><span class="formula">The Audible</span> + mushroom, green pepper, red onion, finished with basil.</p>
+        <p class="lore">Three toppings, three points, no dairy.</p>
+        <p class="what"><span class="formula">Omaha!</span> + mushroom, green pepper, red onion, finished with basil.</p>
         <span class="tag">Vegan, dairy-free</span>
       </article>
       <article class="pie">
         <h3>Blue 42</h3>
+        <p class="lore">The snap count. Also the birthday.</p>
         <p class="what"><span class="formula">The Mile High</span> + garlic, finished with arugula and balsamic.</p>
       </article>
       <article class="pie">
-        <h3>The Pick Six</h3>
+        <h3>The Drive</h3>
+        <p class="lore">98 yards in Cleveland, January '87. Go the distance.</p>
         <p class="what"><span class="formula">The Blitz</span> + mushroom and red onion, finished with basil.</p>
       </article>
     </div>
