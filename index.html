@@ -346,6 +346,37 @@
   }
   .ball.gone { animation: kick 1s cubic-bezier(.25, .6, .45, 1) 2s both, vanish 0.2s ease 3s forwards; }
   @keyframes vanish { to { opacity: 0; } }
+  @supports (offset-path: path("M0 0")) {
+    .ball, .ball.gone {
+      offset-path: path("M47 427 Q 100 -40 160 82");
+      offset-rotate: 0deg;
+      animation: fly 1s cubic-bezier(.25, .6, .45, 1) 2s both, vanish 0.2s ease 3s forwards;
+    }
+    @keyframes fly {
+      from { offset-distance: 0%; transform: rotate(0deg) scale(1.2); }
+      to   { offset-distance: 100%; transform: rotate(1080deg) scale(0.7); }
+    }
+  }
+  .posts { transform-origin: 50% 100%; animation: wobble 0.5s ease 3s; }
+  @keyframes wobble {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-2deg); }
+    50% { transform: rotate(1.5deg); }
+    75% { transform: rotate(-1deg); }
+  }
+  .confetti {
+    position: absolute;
+    left: 160px; top: 82px;
+    width: 7px; height: 11px;
+    margin: -5px 0 0 -3px;
+    border-radius: 1px;
+    opacity: 0;
+    animation: burst 0.9s cubic-bezier(.2, .7, .3, 1) 3s forwards;
+  }
+  @keyframes burst {
+    0%   { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--r)); }
+  }
   .pump { transform: translate(133px, 55px) scale(0); animation: pop 0.5s cubic-bezier(.3, 1.6, .5, 1) 3s forwards; }
   @keyframes pop { to { transform: translate(133px, 55px) scale(1.25); } }
 
@@ -524,6 +555,19 @@
     intro.parentNode.replaceChild(clone, intro);
     intro = clone;
     intro.querySelector("#skip").addEventListener("click", end);
+    var stage = intro.querySelector(".stage");
+    stage.querySelectorAll(".confetti").forEach(function (c) { c.remove(); });
+    var colors = ["#e0501a", "#ffb347", "#f4ecdc", "#3d6bb3"];
+    for (var i = 0; i < 26; i++) {
+      var c = document.createElement("i");
+      var ang = Math.random() * Math.PI * 2, dist = 60 + Math.random() * 90;
+      c.className = "confetti";
+      c.style.background = colors[i % colors.length];
+      c.style.setProperty("--dx", Math.round(Math.cos(ang) * dist) + "px");
+      c.style.setProperty("--dy", Math.round(Math.sin(ang) * dist + 40) + "px");
+      c.style.setProperty("--r", Math.round(Math.random() * 720 - 360) + "deg");
+      stage.appendChild(c);
+    }
     window.scrollTo(0, 0);
     body.classList.add("intro-on");
     timer = setTimeout(end, 4700);
