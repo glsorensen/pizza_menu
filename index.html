@@ -630,9 +630,9 @@
   if (!reduce) play();
   document.getElementById("replay").addEventListener("click", play);
 
-  // countdown to kickoff (1:00 PM Mountain Daylight Time)
+  // countdown to kickoff: Broncos at 49ers, 2:25 PM Mountain Daylight Time
   var clock = document.getElementById("clock");
-  var kickoff = new Date("2026-10-04T13:00:00-06:00").getTime();
+  var kickoff = new Date("2026-10-04T14:25:00-06:00").getTime();
   var parts = {};
   function pad(n) { return (n < 10 ? "0" : "") + n; }
   function setPart(key, text) {
