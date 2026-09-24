@@ -243,6 +243,41 @@
   .plays .pie { border-left-color: var(--ink); }
   .plays .pie.veg { border-left-color: var(--gold); }
   .formula { font-weight: 600; }
+  .diagram-toggle {
+    margin-top: 10px;
+    min-height: 40px;
+    padding: 7px 14px;
+    background: none;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    color: var(--ink-soft);
+    font: 600 0.9rem "Barlow", Arial, sans-serif;
+    cursor: pointer;
+  }
+  .diagram-toggle[aria-expanded="true"] { border-color: var(--orange); color: var(--orange); }
+  .diagram { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s ease; }
+  .diagram > div { overflow: hidden; }
+  .diagram svg {
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    margin: 12px 0 2px;
+    background: #14361f;
+    border: 3px solid #5a3a1e;
+    border-radius: 6px;
+    stroke: #f4ecdc;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+  .diagram .o { stroke-width: 2.2; }
+  .diagram .route { stroke: #ffb347; stroke-width: 2.6; stroke-dasharray: 100; stroke-dashoffset: 100; }
+  .diagram .head { fill: #ffb347; stroke: none; opacity: 0; }
+  .pie.open .diagram { grid-template-rows: 1fr; }
+  .pie.open .route { transition: stroke-dashoffset 0.9s ease 0.3s; stroke-dashoffset: 0; }
+  .pie.open .head { transition: opacity 0.2s ease 1.15s; opacity: 1; }
 
   footer { margin-top: 56px; text-align: center; }
   footer .pumpkin { width: 44px; height: 44px; display: block; margin: 0 auto 8px; }
@@ -401,6 +436,9 @@
     html { scroll-behavior: auto; }
     .pie, .yardline .down, .yardline::after { transition: none; opacity: 1; transform: none; }
     .clock b.flip, .clock.live { animation: none; }
+    .diagram { transition: none; }
+    .diagram .route { stroke-dashoffset: 0; transition: none; }
+    .diagram .head { opacity: 1; transition: none; }
   }
 </style>
 </head>
@@ -513,22 +551,30 @@
         <h3>Red Zone</h3>
         <p class="lore">Inside the 20. Things get hot.</p>
         <p class="what"><span class="formula">Orange Crush</span> + pickled jalapeños and pineapple, finished with hot honey.</p>
+        <button class="diagram-toggle" type="button" aria-expanded="false" aria-controls="dg-redzone">Show the play</button>
+        <div class="diagram" id="dg-redzone" aria-hidden="true"><div><svg viewBox="0 0 160 90" role="img" aria-label="Fade route to the corner of the end zone"><path class="line" d="M8 78H152" stroke-opacity="0.5"/><g class="o"><circle cx="40" cy="70" r="5"/><circle cx="60" cy="70" r="5"/><circle cx="80" cy="70" r="5"/><circle cx="100" cy="70" r="5"/><circle cx="120" cy="70" r="5"/></g><path class="x" d="M124 40l8 8M132 40l-8 8"/><path class="route" pathLength="100" d="M120 64V40L148 12"/><polygon class="head" points="150,10 140,13 147,20"/></svg></div></div>
       </article>
       <article class="pie veg">
         <h3>Field Goal</h3>
         <p class="lore">Three toppings, three points, no dairy.</p>
         <p class="what"><span class="formula">Omaha!</span> + mushroom, green pepper, red onion, finished with basil.</p>
         <span class="tag">Vegan, dairy-free</span>
+        <button class="diagram-toggle" type="button" aria-expanded="false" aria-controls="dg-fieldgoal">Show the play</button>
+        <div class="diagram" id="dg-fieldgoal" aria-hidden="true"><div><svg viewBox="0 0 160 90" role="img" aria-label="Field goal kicked through the uprights"><path class="line" d="M8 78H152" stroke-opacity="0.5"/><g class="o"><circle cx="40" cy="70" r="5"/><circle cx="60" cy="70" r="5"/><circle cx="80" cy="70" r="5"/><circle cx="100" cy="70" r="5"/><circle cx="120" cy="70" r="5"/></g><path class="posts" d="M128 6V30M152 6V30M128 30H152M140 30V46"/><path class="route" pathLength="100" d="M80 64Q96 6 140 20"/><polygon class="head" points="142,21 133,22 138,14"/></svg></div></div>
       </article>
       <article class="pie">
         <h3>Blue 42</h3>
         <p class="lore">The snap count. Also the birthday.</p>
         <p class="what"><span class="formula">The Mile High</span> + garlic, finished with arugula and balsamic.</p>
+        <button class="diagram-toggle" type="button" aria-expanded="false" aria-controls="dg-blue42">Show the play</button>
+        <div class="diagram" id="dg-blue42" aria-hidden="true"><div><svg viewBox="0 0 160 90" role="img" aria-label="Slant route across the middle"><path class="line" d="M8 78H152" stroke-opacity="0.5"/><g class="o"><circle cx="40" cy="70" r="5"/><circle cx="60" cy="70" r="5"/><circle cx="80" cy="70" r="5"/><circle cx="100" cy="70" r="5"/><circle cx="120" cy="70" r="5"/></g><path class="x" d="M48 34l8 8M56 34l-8 8"/><path class="route" pathLength="100" d="M40 64V50L82 22"/><polygon class="head" points="84,21 74,22 80,30"/></svg></div></div>
       </article>
       <article class="pie">
         <h3>The Drive</h3>
         <p class="lore">98 yards in Cleveland, January '87. Go the distance.</p>
         <p class="what"><span class="formula">The Blitz</span> + mushroom and red onion, finished with basil.</p>
+        <button class="diagram-toggle" type="button" aria-expanded="false" aria-controls="dg-thedrive">Show the play</button>
+        <div class="diagram" id="dg-thedrive" aria-hidden="true"><div><svg viewBox="0 0 160 90" role="img" aria-label="Go route straight down the field"><path class="line" d="M8 78H152" stroke-opacity="0.5"/><g class="o"><circle cx="40" cy="70" r="5"/><circle cx="60" cy="70" r="5"/><circle cx="80" cy="70" r="5"/><circle cx="100" cy="70" r="5"/><circle cx="120" cy="70" r="5"/></g><path class="hash" d="M72 52h16M72 38h16M72 24h16" stroke-opacity="0.6"/><path class="route" pathLength="100" d="M80 64V10"/><polygon class="head" points="80,6 74,15 86,15"/></svg></div></div>
       </article>
     </div>
   </section>
@@ -606,6 +652,18 @@
   }
   tick();
   var clockTimer = setInterval(tick, 1000);
+
+  // tap-to-reveal chalkboard play diagrams
+  document.querySelectorAll(".diagram-toggle").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var pie = btn.closest(".pie");
+      var open = !pie.classList.contains("open");
+      pie.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", String(open));
+      btn.textContent = open ? "Hide the play" : "Show the play";
+      document.getElementById(btn.getAttribute("aria-controls")).setAttribute("aria-hidden", String(!open));
+    });
+  });
 
   // reveal cards and chalk lines as they scroll into view
   var reveal = document.querySelectorAll(".pie, .yardline");
