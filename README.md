@@ -9,4 +9,6 @@ Menu for Sunday, October 4. One static page for GitHub Pages: no build step, no 
 
 The intro plays on every visit. The "Replay the intro" button at the bottom plays it again.
 
+House plays have tap-to-reveal play diagrams; the scoreboard counts down to kickoff.
+
 Live at: https://glsorensen.github.io/pizza_menu/
