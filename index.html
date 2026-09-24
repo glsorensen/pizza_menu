@@ -354,7 +354,7 @@
 </head>
 <body>
 
-<!-- Intro: plays once per device, about 4.5 seconds, tap Skip to jump ahead -->
+<!-- Intro: plays on every visit, about 4.5 seconds, tap Skip to jump ahead -->
 <div class="intro" id="intro" aria-hidden="true">
   <div class="half l"></div>
   <div class="half r"></div>
@@ -483,14 +483,11 @@
 
 <script>
 (function () {
-  var KEY = "pizzaPlaybookIntroSeen";
   var body = document.body;
   var intro = document.getElementById("intro");
   var timer;
 
-  function seen() { try { return localStorage.getItem(KEY) === "1"; } catch (e) { return false; } }
-  function markSeen() { try { localStorage.setItem(KEY, "1"); } catch (e) {} }
-  function end() { clearTimeout(timer); body.classList.remove("intro-on"); markSeen(); }
+  function end() { clearTimeout(timer); body.classList.remove("intro-on"); }
   function play() {
     // restart CSS animations by re-inserting the node
     var clone = intro.cloneNode(true);
@@ -503,7 +500,7 @@
   }
 
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (!reduce && !seen()) play();
+  if (!reduce) play();
   document.getElementById("replay").addEventListener("click", play);
 
   // highlight the tab for the section on screen
