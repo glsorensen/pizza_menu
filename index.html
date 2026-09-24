@@ -99,8 +99,8 @@
     border-radius: 4px;
   }
   .scoreboard { flex-wrap: wrap; justify-content: center; }
-  .clock:empty { display: none; }
   .clock { font-variant-numeric: tabular-nums; perspective: 300px; }
+  .clock em { font-style: normal; text-transform: uppercase; color: #c9cfdb; margin-right: 7px; }
   .clock b { display: inline-block; font-weight: 700; }
   .clock b.flip { animation: flip 0.22s ease-out; }
   @keyframes flip { from { transform: rotateX(-90deg); opacity: 0.3; } to { transform: none; opacity: 1; } }
@@ -470,7 +470,7 @@
   <svg class="leaf" style="left:62%;animation-delay:1.4s" viewBox="0 0 20 20"><path d="M10 1C15 5 18 10 10 19 2 10 5 5 10 1z" fill="#9a3412"/></svg>
   <svg class="leaf" style="left:84%;animation-delay:5.5s" viewBox="0 0 20 20"><path d="M10 1C15 5 18 10 10 19 2 10 5 5 10 1z" fill="#e0501a"/></svg>
 
-  <p class="scoreboard" aria-label="Sunday, October 4 at 1 pm"><span>SUN</span><span>OCT 4</span><span>1:00 PM</span><span class="clock" id="clock" aria-live="off"></span></p>
+  <p class="scoreboard" aria-label="Sunday, October 4 at 1 pm"><span>SUN</span><span>OCT 4</span><span>1:00 PM</span><span class="clock" id="clock" aria-live="off"><em>49ers kickoff</em></span></p>
   <h1>The Pizza Playbook</h1>
   <p class="poem">
     <span>Pumpkins are orange,</span>
@@ -646,7 +646,7 @@
   function tick() {
     var left = kickoff - Date.now();
     if (left <= 0) {
-      clock.textContent = "KICKOFF";
+      clock.textContent = "49ERS KICKOFF";
       clock.classList.add("live");
       clearInterval(clockTimer);
       return;
