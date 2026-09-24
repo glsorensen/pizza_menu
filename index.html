@@ -193,6 +193,7 @@
   .field::after { right: 10px; }
 
   .dough { margin: 32px auto 0; max-width: 32em; text-align: center; font-size: 0.98rem; }
+  .dough.order { margin-top: 10px; font-weight: 600; }
 
   .yardline { display: flex; align-items: center; gap: 12px; margin: 48px 0 22px; }
   .yardline::after { content: ""; flex: 1; height: 3px; background: var(--chalk); opacity: 0.85; transform-origin: left; transition: transform 0.7s cubic-bezier(.2, .7, .3, 1) 0.1s; }
@@ -483,7 +484,7 @@
   <svg class="leaf" style="left:62%;animation-delay:1.4s" viewBox="0 0 20 20"><path d="M10 1C15 5 18 10 10 19 2 10 5 5 10 1z" fill="#9a3412"/></svg>
   <svg class="leaf" style="left:84%;animation-delay:5.5s" viewBox="0 0 20 20"><path d="M10 1C15 5 18 10 10 19 2 10 5 5 10 1z" fill="#e0501a"/></svg>
 
-  <p class="scoreboard" aria-label="Sunday, October 4 at 1 pm"><span>SUN</span><span>OCT 4</span><span>1:00 PM</span><span class="clock" id="clock" aria-live="off"><em>49ers kickoff</em></span></p>
+  <p class="scoreboard" aria-label="Sunday, October 4, pizza at 1 pm, 49ers kickoff at 2:25 pm"><span>SUN</span><span>OCT 4</span><span>PIZZA 1:00 PM</span><span class="clock" id="clock" aria-live="off"><em>49ers kickoff</em></span></p>
   <h1>The Pizza Playbook</h1>
   <p class="poem">
     <span>Pumpkins are orange,</span>
@@ -503,7 +504,8 @@
 </nav>
 
 <main class="field">
-  <p class="dough">Individual-sized New York–style pies on a slow, cold-fermented dough, rested 48 to 72 hours for a thin, crisp crust with real flavor.</p>
+  <p class="dough">Individual-sized New York–style pies on a slow, cold-fermented dough, rested 48 to 72 hours for a thin, crisp crust with real flavor. Dough contains wheat; no gluten-free crust this time.</p>
+  <p class="dough order">Pick a base, call your toppings and finisher, and we bake to order.</p>
 
   <section id="bases" aria-labelledby="h-bases">
     <div class="yardline"><span class="down" aria-hidden="true">1st</span><h2 id="h-bases">Pick your base</h2></div>
@@ -513,6 +515,7 @@
         <p class="classic">Margherita</p>
         <p class="lore">Home field since 1960. Where every play starts.</p>
         <p class="what">Tomato sauce, fresh mozzarella, basil, olive oil, grated Parmesan.</p>
+        <span class="tag">Vegetarian</span>
       </article>
       <article class="pie">
         <h3>Orange Crush</h3>
@@ -552,7 +555,7 @@
     <div class="yardline"><span class="down" aria-hidden="true">3rd</span><h2 id="h-finishers">Finish it off</h2></div>
     <p class="note">Added after the bake.</p>
     <ul class="finishers">
-      <li><strong>Hot honey</strong><span>Sweet heat, drizzled over the top</span></li>
+      <li><strong>Hot honey</strong><span>Sweet heat, drizzled over the top. Not vegan.</span></li>
       <li><strong>Balsamic</strong><span>Tangy glaze</span></li>
       <li><strong>Basil</strong><span>Fresh, torn leaves</span></li>
       <li><strong>Arugula</strong><span>Peppery greens piled on</span></li>
@@ -581,6 +584,7 @@
         <h3>Blue 42</h3>
         <p class="lore">The cadence every quarterback barks before the ball moves. This year it&rsquo;s the number on the cake.</p>
         <p class="what"><span class="formula">The Mile High</span> + garlic, finished with arugula and balsamic.</p>
+        <span class="tag">Vegetarian</span>
         <button class="diagram-toggle" type="button" aria-expanded="false" aria-controls="dg-blue42">Show the play</button>
         <div class="diagram" id="dg-blue42" aria-hidden="true"><div><svg viewBox="0 0 160 90" role="img" aria-label="Slant route across the middle"><path class="line" d="M8 78H152" stroke-opacity="0.5"/><g class="o"><circle cx="40" cy="70" r="5"/><circle cx="60" cy="70" r="5"/><circle cx="80" cy="70" r="5"/><circle cx="100" cy="70" r="5"/><circle cx="120" cy="70" r="5"/></g><path class="x" d="M48 34l8 8M56 34l-8 8"/><path class="route" pathLength="100" d="M40 64V50L82 22"/><polygon class="head" points="84,21 74,22 80,30"/></svg></div></div>
       </article>
