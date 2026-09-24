@@ -98,6 +98,14 @@
     padding: 5px 10px;
     border-radius: 4px;
   }
+  .scoreboard { flex-wrap: wrap; justify-content: center; }
+  .clock:empty { display: none; }
+  .clock { font-variant-numeric: tabular-nums; perspective: 300px; }
+  .clock b { display: inline-block; font-weight: 700; }
+  .clock b.flip { animation: flip 0.22s ease-out; }
+  @keyframes flip { from { transform: rotateX(-90deg); opacity: 0.3; } to { transform: none; opacity: 1; } }
+  .clock.live { background: var(--orange); color: #fff; border-color: transparent; animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(224, 80, 26, 0.25); } }
   h1 {
     font-family: "Graduate", Georgia, serif;
     font-weight: 400;
@@ -361,6 +369,7 @@
     .leaf { display: none; }
     html { scroll-behavior: auto; }
     .pie, .yardline .down, .yardline::after { transition: none; opacity: 1; transform: none; }
+    .clock b.flip, .clock.live { animation: none; }
   }
 </style>
 </head>
@@ -390,7 +399,7 @@
   <svg class="leaf" style="left:62%;animation-delay:1.4s" viewBox="0 0 20 20"><path d="M10 1C15 5 18 10 10 19 2 10 5 5 10 1z" fill="#9a3412"/></svg>
   <svg class="leaf" style="left:84%;animation-delay:5.5s" viewBox="0 0 20 20"><path d="M10 1C15 5 18 10 10 19 2 10 5 5 10 1z" fill="#e0501a"/></svg>
 
-  <p class="scoreboard" aria-label="Sunday, October 4 at 1 pm"><span>SUN</span><span>OCT 4</span><span>1:00 PM</span></p>
+  <p class="scoreboard" aria-label="Sunday, October 4 at 1 pm"><span>SUN</span><span>OCT 4</span><span>1:00 PM</span><span class="clock" id="clock" aria-live="off"></span></p>
   <h1>The Pizza Playbook</h1>
   <p class="poem">
     <span>Pumpkins are orange,</span>
@@ -503,6 +512,7 @@
 
 <script>
 (function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var body = document.body;
   var intro = document.getElementById("intro");
   var timer;
@@ -519,9 +529,39 @@
     timer = setTimeout(end, 4700);
   }
 
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!reduce) play();
   document.getElementById("replay").addEventListener("click", play);
+
+  // countdown to kickoff (1:00 PM Mountain Daylight Time)
+  var clock = document.getElementById("clock");
+  var kickoff = new Date("2026-10-04T13:00:00-06:00").getTime();
+  var parts = {};
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function setPart(key, text) {
+    var b = parts[key];
+    if (!b) { b = document.createElement("b"); parts[key] = b; clock.appendChild(b); }
+    if (b.textContent !== text) {
+      b.textContent = text;
+      if (!reduce) { b.classList.remove("flip"); void b.offsetWidth; b.classList.add("flip"); }
+    }
+  }
+  function tick() {
+    var left = kickoff - Date.now();
+    if (left <= 0) {
+      clock.textContent = "KICKOFF";
+      clock.classList.add("live");
+      clearInterval(clockTimer);
+      return;
+    }
+    var sec = Math.floor(left / 1000);
+    var d = Math.floor(sec / 86400), h = Math.floor(sec % 86400 / 3600), m = Math.floor(sec % 3600 / 60), sc = sec % 60;
+    setPart("d", d > 0 ? d + "d " : "");
+    setPart("h", pad(h) + "h ");
+    setPart("m", pad(m) + "m ");
+    setPart("s", pad(sc) + "s");
+  }
+  tick();
+  var clockTimer = setInterval(tick, 1000);
 
   // reveal cards and chalk lines as they scroll into view
   var reveal = document.querySelectorAll(".pie, .yardline");
