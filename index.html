@@ -686,18 +686,28 @@
     reveal.forEach(function (el) { el.classList.add("in"); });
   }
 
-  // highlight the tab for the section on screen
+  // highlight the tab for the section sitting under the sticky nav
   var links = document.querySelectorAll("nav.tabs a");
-  if ("IntersectionObserver" in window) {
-    var obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) {
-          links.forEach(function (a) { a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id); });
-        }
-      });
-    }, { rootMargin: "-45% 0px -50% 0px" });
-    document.querySelectorAll("main section").forEach(function (s) { obs.observe(s); });
+  var sections = document.querySelectorAll("main section");
+  var nav = document.querySelector("nav.tabs");
+  var ticking = false;
+  function setActive(id) {
+    links.forEach(function (a) { a.classList.toggle("active", a.getAttribute("href") === "#" + id); });
   }
+  function current() {
+    var line = nav.getBoundingClientRect().bottom + 12;
+    var id = sections[0].id;
+    sections.forEach(function (sec) { if (sec.getBoundingClientRect().top <= line) id = sec.id; });
+    setActive(id);
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(current); }
+  }, { passive: true });
+  links.forEach(function (a) {
+    a.addEventListener("click", function () { setActive(a.getAttribute("href").slice(1)); });
+  });
+  current();
 })();
 </script>
 </body>
