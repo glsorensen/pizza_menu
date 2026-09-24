@@ -179,7 +179,10 @@
   .dough { margin: 32px auto 0; max-width: 32em; text-align: center; font-size: 0.98rem; }
 
   .yardline { display: flex; align-items: center; gap: 12px; margin: 48px 0 22px; }
-  .yardline::after { content: ""; flex: 1; height: 3px; background: var(--chalk); opacity: 0.85; }
+  .yardline::after { content: ""; flex: 1; height: 3px; background: var(--chalk); opacity: 0.85; transform: scaleX(0); transform-origin: left; transition: transform 0.7s cubic-bezier(.2, .7, .3, 1) 0.1s; }
+  .yardline .down { opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; }
+  .yardline.in::after { transform: scaleX(1); }
+  .yardline.in .down { opacity: 1; transform: none; }
   .down { font-family: "Graduate", Georgia, serif; font-size: 2rem; line-height: 1; color: var(--orange); }
   h2 {
     font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
@@ -197,7 +200,14 @@
     padding: 16px 18px 15px;
     border-radius: 2px 10px 10px 2px;
     box-shadow: 0 1px 0 var(--line);
+    opacity: 0;
+    transform: translateX(-24px);
+    transition: opacity 0.55s ease, transform 0.55s cubic-bezier(.2, .7, .3, 1);
   }
+  .pie:nth-child(2) { transition-delay: 0.08s; }
+  .pie:nth-child(3) { transition-delay: 0.16s; }
+  .pie:nth-child(4) { transition-delay: 0.24s; }
+  .pie.in { opacity: 1; transform: none; }
   .pie h3 { font-family: "Graduate", Georgia, serif; font-weight: 400; font-size: 1.45rem; line-height: 1.15; margin: 0; }
   .classic, .lore { font-style: italic; color: var(--ink-soft); font-size: 0.95rem; margin: 2px 0 6px; }
   .classic + .lore { margin-top: -4px; }
@@ -350,6 +360,7 @@
   @media (prefers-reduced-motion: reduce) {
     .leaf { display: none; }
     html { scroll-behavior: auto; }
+    .pie, .yardline .down, .yardline::after { transition: none; opacity: 1; transform: none; }
   }
 </style>
 </head>
@@ -511,6 +522,19 @@
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!reduce) play();
   document.getElementById("replay").addEventListener("click", play);
+
+  // reveal cards and chalk lines as they scroll into view
+  var reveal = document.querySelectorAll(".pie, .yardline");
+  if ("IntersectionObserver" in window) {
+    var rev = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add("in"); rev.unobserve(en.target); }
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -10% 0px" });
+    reveal.forEach(function (el) { rev.observe(el); });
+  } else {
+    reveal.forEach(function (el) { el.classList.add("in"); });
+  }
 
   // highlight the tab for the section on screen
   var links = document.querySelectorAll("nav.tabs a");
